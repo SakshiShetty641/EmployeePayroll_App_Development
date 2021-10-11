@@ -4,7 +4,9 @@ import com.bridgelabz.employeepayroll.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayroll.employeepayrollapp.entity.Employee;
 import com.bridgelabz.employeepayroll.employeepayrollapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,9 +16,19 @@ import java.util.Optional;
  * @version - 0.0.1
  * @since - 11/10/2021
  */
+
+@Service
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    /**
+     * Function to get the list of employee stored in database
+     * @return list of employee
+     */
+    public List<Employee> employees() {
+        return employeeRepository.findAll();
+    }
 
     /**
      * Function to add employees to the database

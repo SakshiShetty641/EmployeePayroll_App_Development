@@ -1,11 +1,12 @@
 package com.bridgelabz.employeepayroll.employeepayrollapp.controller;
 
-
 import com.bridgelabz.employeepayroll.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayroll.employeepayrollapp.entity.Employee;
 import com.bridgelabz.employeepayroll.employeepayrollapp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Layer that receives various HTTP request from client
@@ -18,6 +19,15 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    /**
+     * Function to get mapping from client
+     * @return greeting
+     */
+    @GetMapping(value = "/employee")
+    public List<Employee> employees() {
+        return employeeService.employees();
+    }
 
     /**
      * Function to receive get request from client
