@@ -3,6 +3,7 @@ package com.bridgelabz.employeepayroll.employeepayrollapp.service;
 import com.bridgelabz.employeepayroll.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayroll.employeepayrollapp.entity.Employee;
 import com.bridgelabz.employeepayroll.employeepayrollapp.repository.EmployeeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      * Function to get the list of employee stored in database
@@ -37,25 +40,22 @@ public class EmployeeService {
      */
     public Employee addEmployee(EmployeeDTO employeeDto){
         Employee employee = new Employee();
-        employee.setName(employeeDto.getName());
-        employee.setSalary(employeeDto.getSalary());
+        modelMapper.map(employeeDto, employee);
         return employeeRepository.save(employee);
     }
 
     /**
      * Function to edit the available employee in the database
      * @param id unique id of the employee
-     * @param employeeDTO  data from client
+     * @param employeeDto  data from client
      * @return updated employee entry
      */
-    public Employee updateEmployee(int id, EmployeeDTO employeeDTO) {
+    public Employee updateEmployee(int id, EmployeeDTO employeeDto) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
-            employee.setName(employeeDTO.getName());
-            employee.setSalary(employeeDTO.getSalary());
-            return employee;
-
+            modelMapper.map(employeeDto, employee);
+            return employeeRepository.save(employee);
         }
         return null;
     }
@@ -71,6 +71,4 @@ public class EmployeeService {
             employeeRepository.delete(optionalEmployee.get());
             return "Record deleted successfully";
         }
-        return "Record does not exists with this id : " + id;
-    }
-}
+        return "Record does not exists with this id : "
