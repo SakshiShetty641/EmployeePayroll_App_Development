@@ -14,6 +14,7 @@ import java.util.List;
  * @version - 0.0.1
  * @since - 10/10/2021
  */
+
 @RestController
 public class EmployeeController {
 
@@ -34,7 +35,7 @@ public class EmployeeController {
      * @param employeeDto employee data from client
      * @return added employee in the database
      */
-    @PostMapping("/addemployee")
+    @PostMapping("/add-employee")
     public Employee addEmployee(@RequestBody EmployeeDTO employeeDto){
         return employeeService.addEmployee(employeeDto);
     }
@@ -44,7 +45,7 @@ public class EmployeeController {
      * @param id unique id of the employee
      * @return updated employee details
      */
-    @PutMapping(value = "/editemployee/{id}")
+    @PutMapping(value = "/edit-employee/{id}")
     public Employee updateEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDto){
         return employeeService.updateEmployee(id, employeeDto);
     }
@@ -54,7 +55,7 @@ public class EmployeeController {
      * @param id unique id of the employee
      * @return String message displaying status of operation
      */
-    @DeleteMapping(value = "/deleteemployee")
+    @DeleteMapping(value = "/delete-employee")
     public String deleteemployee(@RequestParam int id) {
         return employeeService.deleteEmployee(id);
     }
