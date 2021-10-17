@@ -2,6 +2,7 @@ package com.bridgelabz.employeepayroll.employeepayrollapp.service;
 
 import com.bridgelabz.employeepayroll.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayroll.employeepayrollapp.entity.Employee;
+import com.bridgelabz.employeepayroll.employeepayrollapp.exceptions.CustomException;
 import com.bridgelabz.employeepayroll.employeepayrollapp.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class EmployeeService {
      * @param employeeDto greeting data from client
      * @return employees added
      */
-    public Employee addEmployee(EmployeeDTO employeeDto){
+    public Employee addEmployee(EmployeeDTO employeeDto) {
         Employee employee = new Employee();
         modelMapper.map(employeeDto, employee);
         return employeeRepository.save(employee);
@@ -47,7 +48,7 @@ public class EmployeeService {
     /**
      * Function to edit the available employee in the database
      * @param id unique id of the employee
-     * @param employeeDto  data from client
+     * @param employeeDto data from client
      * @return updated employee entry
      */
     public Employee updateEmployee(int id, EmployeeDTO employeeDto) {
@@ -71,4 +72,6 @@ public class EmployeeService {
             employeeRepository.delete(optionalEmployee.get());
             return "Record deleted successfully";
         }
-        return "Record does not exists with this id : "
+        throw new CustomException("Record does not exists with this id : " + id);
+    }
+}
